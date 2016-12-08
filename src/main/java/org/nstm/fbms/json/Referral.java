@@ -6,7 +6,7 @@ package org.nstm.fbms.json;
  */
 
 
-public class Referral {
+public class Referral extends AbstractJson {
 	public String ref;
 	public String source;
 	public String type;

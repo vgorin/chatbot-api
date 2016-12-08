@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 
-public class Delivery {
+public class Delivery extends AbstractJson {
 	public List<String> mids;
 	public String watermark;
 	public String seq;

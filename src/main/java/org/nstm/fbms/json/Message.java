@@ -22,12 +22,17 @@ import java.util.List;
  * </table>
  * </p>
  *
+ * @see <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference/message">Message Received</a>
+ * @see <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-delivered">Message Delivered</a>
+ * @see <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-read">Message Read</a>
+ * @see <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-echo">Message Echo</a>
+
  * @author vgorin
  *         file created on 11/19/16 2:41 PM
  */
 
 
-public class Message {
+public class Message extends AbstractJson {
 	public String mid;
 	public String seq;
 	public String text;
@@ -50,8 +55,7 @@ public class Message {
 		this.text = text;
 	}
 
-	public Message(String text, Attachment attachment) {
-		this.text = text;
+	public Message(Attachment attachment) {
 		this.attachment = attachment;
 	}
 }

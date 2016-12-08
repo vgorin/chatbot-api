@@ -6,7 +6,14 @@ package org.nstm.fbms.json;
  */
 
 
-public class Attachment {
+public class Attachment extends AbstractJson {
 	public String type;
 	public Payload payload;
+
+	public Attachment() {
+	}
+
+	public Attachment(String type) {
+		this.type = type;
+	}
 }

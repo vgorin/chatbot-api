@@ -6,7 +6,7 @@ package org.nstm.fbms.json;
  */
 
 
-public class Postback {
+public class Postback extends AbstractJson {
 	public String payload;
 	public Referral referral;
 }

@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 
-public class QuickReply {
+public class QuickReply extends AbstractJson {
 	@JsonProperty("content_type") public String contentType;
 	public String title;
 	public String payload;

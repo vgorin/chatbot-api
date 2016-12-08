@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 
-public class Response {
+public class Response extends AbstractJson {
 	@JsonProperty("recipient_id") public String recipientId;
 	@JsonProperty("message_id") public String messageId;
 }

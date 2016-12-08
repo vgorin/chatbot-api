@@ -14,16 +14,16 @@ package org.nstm.fbms.json;
  * </table>
  * </p>
  *
- * @see <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference/message">Message Received Examples</a>
- * @see <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-delivered">Message Delivered Examples</a>
- * @see <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-read">Message Read Examples</a>
+ * @see <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference/message">Message Received</a>
+ * @see <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-delivered">Message Delivered</a>
+ * @see <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-read">Message Read</a>
  *
  * @author vgorin
  *         file created on 11/19/16 2:53 PM
  */
 
 
-public class Messaging {
+public class Messaging extends AbstractJson {
 	public Sender sender;
 	public Recipient recipient;
 	public String timestamp;

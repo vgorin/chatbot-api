@@ -6,7 +6,7 @@ package org.nstm.fbms.json;
  */
 
 
-public class Read {
+public class Read extends AbstractJson {
 	public String watermark;
 	public String seq;
 }

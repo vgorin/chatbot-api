@@ -1,7 +1,5 @@
 package org.nstm.fbms;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -25,15 +23,10 @@ import java.util.List;
  */
 
 public class MessengerClient {
-	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 	private static final HttpClient HTTP_CLIENT = HttpClients.createDefault();
 	private static final Logger log = LoggerFactory.getLogger(MessengerClient.class);
 
 	private final String postURL;
-
-	static {
-		OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-	}
 
 	/**
 	 *
@@ -43,25 +36,47 @@ public class MessengerClient {
 		this.postURL = postURL;
 	}
 
-	public Response send(String recipientId, String text) throws IOException {
+	public static MessengerClient defaultClient(String accessToken) {
+		return new MessengerClient(String.format("https://graph.facebook.com/v2.6/me/messages?access_token=%s", accessToken));
+	}
+
+	public Response sendText(String recipientId, String text) throws IOException {
 		Message message = new Message(text);
 		return send(new Recipient(recipientId), message);
 	}
 
-	public Response send(String recipientId, String text, QuickReply... replies) throws IOException {
-		return send(recipientId, text, Arrays.asList(replies));
+	public Response sendReplies(String recipientId, String text, QuickReply... replies) throws IOException {
+		return sendReplies(recipientId, text, Arrays.asList(replies));
 	}
 
-	public Response send(String recipientId, String text, List<QuickReply> replies) throws IOException {
+	public Response sendReplies(String recipientId, String text, List<QuickReply> replies) throws IOException {
 		Recipient recipient = new Recipient(recipientId);
 		Message message = new Message(text);
 		message.quickReplies = replies;
 		return send(recipient, message);
 	}
 
+	public Response sendButtons(String recipientId, String text, Button... buttons) throws IOException {
+		return sendButtons(recipientId, text, Arrays.asList(buttons));
+	}
+
+	public Response sendButtons(String recipientId, String text, List<Button> buttons) throws IOException {
+		Recipient recipient = new Recipient(recipientId);
+		Message message = new Message();
+		message.attachment = new Attachment("template");
+		message.attachment.payload = new Payload("button");
+		message.attachment.payload.text = text;
+		message.attachment.payload.buttons = buttons;
+		return send(recipient, message);
+	}
+
+	public Response send(String recipientId, Message message) throws IOException {
+		return send(new Recipient(recipientId), message);
+	}
+
 	private Response send(Recipient recipient, Message message) throws IOException {
 		log.info("sending a message to {}, message = {}", recipient, message);
-		String jsonPayload = OBJECT_MAPPER.writeValueAsString(new Messaging(recipient, message));
+		String jsonPayload = JsonUtil.toJson(new Messaging(recipient, message));
 		log.info("json payload for {} is {}", recipient, jsonPayload);
 		Response response = sendJson(jsonPayload);
 		if(response != null) {
@@ -85,7 +100,7 @@ public class MessengerClient {
 		StatusLine line = httpResponse.getStatusLine();
 		if(line.getStatusCode() == 200) {
 			log.info("{}\n{}", line, response);
-			return OBJECT_MAPPER.readValue(response, Response.class);
+			return JsonUtil.fromJson(response, Response.class);
 		}
 		else {
 			log.warn("{}\n{}", line, response);

@@ -6,7 +6,7 @@ package org.nstm.fbms.json;
  */
 
 
-public class Recipient {
+public class Recipient extends AbstractJson {
 	public String id;
 
 	public Recipient() {
