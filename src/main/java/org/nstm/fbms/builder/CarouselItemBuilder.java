@@ -6,6 +6,10 @@ import org.nstm.fbms.json.Element;
 import java.util.LinkedList;
 
 /**
+ * An internal helper builder for {@link CarouselBuilder}
+ *
+ * @see CarouselBuilder
+ *
  * @author vgorin
  *         file created on 12/7/16 6:36 PM
  */

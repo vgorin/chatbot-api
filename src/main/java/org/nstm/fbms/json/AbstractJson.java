@@ -3,6 +3,10 @@ package org.nstm.fbms.json;
 import org.nstm.fbms.JsonUtil;
 
 /**
+ * A superclass for all JSON objects.
+ * Overrides {@link #toString()} method in such a way that it renders an object
+ * to a pretty JSON format.
+ *
  * @author vgorin
  *         file created on 12/7/16 4:55 PM
  */

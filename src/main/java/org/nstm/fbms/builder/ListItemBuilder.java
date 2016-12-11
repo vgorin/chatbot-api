@@ -7,6 +7,10 @@ import org.nstm.fbms.json.Element;
 import java.util.LinkedList;
 
 /**
+ * An internal helper builder for {@link ListBuilder}
+ *
+ * @see ListBuilder
+ *
  * @author vgorin
  *         file created on 12/8/16 4:25 PM
  */

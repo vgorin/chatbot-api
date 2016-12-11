@@ -1,5 +1,7 @@
 package org.nstm.fbms.json;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * <p>
  * Field description:
@@ -11,6 +13,7 @@ package org.nstm.fbms.json;
  *   <tr><td>message</td><td>Message Received</td><td>required</td></tr>
  *   <tr><td>delivery</td><td>Message Delivered</td><td>not used</td></tr>
  *   <tr><td>read</td><td>Message Read</td><td>not used</td></tr>
+ *   <tr><td>sender_action</td><td>not used</td><td>optional</td></tr>
  * </table>
  * </p>
  *
@@ -30,6 +33,11 @@ public class Messaging extends AbstractJson {
 	public Message message;
 	public Delivery delivery;
 	public Read read;
+	/**
+	 * One of: mark_seen, typing_on, typing_off
+	 */
+	@JsonProperty("sender_action")
+	public String senderAction;
 
 	public Messaging() {
 	}

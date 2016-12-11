@@ -18,6 +18,7 @@ public class Payload extends AbstractJson {
 	public List<Element> elements;
 	@JsonProperty("top_element_style")
 	public String topElementStyle;
+	public Coordinates coordinates;
 
 	public Payload() {
 	}
