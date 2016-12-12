@@ -1,8 +1,12 @@
 package org.nstm.fbms.json;
 
+import org.nstm.fbms.JsonUtil;
+
 import java.util.List;
 
 /**
+ * Root class for <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference">Webhook API</a>
+ *
  * @see <a href="https://developers.facebook.com/docs/messenger-platform/webhook-reference#format">Callback Common Format</a>
  *
  * @author vgorin
@@ -13,4 +17,8 @@ import java.util.List;
 public class Callback extends AbstractJson {
 	public String object;
 	public List<Entry> entry;
+
+	public static Callback parse(String json) throws Exception {
+		return JsonUtil.fromJson(json, Callback.class);
+	}
 }

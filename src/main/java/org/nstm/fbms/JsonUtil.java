@@ -1,6 +1,7 @@
 package org.nstm.fbms;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,6 +18,7 @@ public class JsonUtil {
 
 	static {
 		OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+		OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 	}
 
 	public static String toPrettyJson(Object obj) {

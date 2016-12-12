@@ -22,10 +22,12 @@ import java.util.List;
 
 
 public class QuickReply extends AbstractJson {
-	@JsonProperty("content_type") public String contentType;
+	@JsonProperty("content_type")
+	public String contentType;
 	public String title;
 	public String payload;
-	@JsonProperty("image_url") public String imageUrl;
+	@JsonProperty("image_url")
+	public String imageUrl;
 
 	public QuickReply() {
 	}
