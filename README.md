@@ -1,6 +1,78 @@
-# FB Messenger Platform API by NoShit Team (tm)
+# FB Messenger Platform API by NoShit Team (tm) #
 
-Basic Usage Example (Spring-boot based RestController):
+## Basic Usage Example (Spring-boot based RestController). ##
+
+### 1. pom.xml ###
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>nstm</groupId>
+	<artifactId>fb-bot-api-example</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<!-- Inherit Spring Boot version in Spring Boot dependencies -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.2.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>nstm</groupId>
+			<artifactId>fb-bot-api</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>fb-bot-api-example</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>2.1</version>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+```
+
+### 2. RestController ###
 
 ```
 package org.nstm.fbms.example;
@@ -68,5 +140,28 @@ public class FacebookController {
 		return "";
 	}
 
+}
+```
+
+### 3. SpringBootApplication ###
+```
+package org.nstm.fbms.example;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+
+/**
+ * @author vgorin
+ *         file created on 12/7/16 4:34 PM
+ */
+
+
+@SpringBootApplication
+@ComponentScan(basePackages = "org.nstm.fbms.example")
+public class ExampleApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(ExampleApplication.class, args);
+	}
 }
 ```
