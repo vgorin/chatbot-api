@@ -6,7 +6,7 @@
 
 	<groupId>nstm</groupId>
 	<artifactId>fb-bot-api</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.1</version>
 	<name>FB Messenger Platform API by NoShit Team (tm)</name>
 
 	<dependencies>
