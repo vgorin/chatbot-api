@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *   <tr><td>sender</td><td>always present</td><td>not used</td></tr>
  *   <tr><td>recipient</td><td>always present</td><td>required</td></tr>
  *   <tr><td>timestamp</td><td>always present</td><td>not used</td></tr>
+ *   <tr><td>postback</td><td>optional</td><td>not used</td></tr>
  *   <tr><td>message</td><td>Message Received</td><td>required</td></tr>
  *   <tr><td>delivery</td><td>Message Delivered</td><td>not used</td></tr>
  *   <tr><td>read</td><td>Message Read</td><td>not used</td></tr>
@@ -30,6 +31,7 @@ public class Messaging extends AbstractJson {
 	public Sender sender;
 	public Recipient recipient;
 	public String timestamp;
+	public Postback postback;
 	public Message message;
 	public Delivery delivery;
 	public Read read;

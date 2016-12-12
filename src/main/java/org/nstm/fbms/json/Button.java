@@ -55,6 +55,10 @@ public class Button extends AbstractJson {
 		return button;
 	}
 
+	public static Button createPostbackButton(String title) {
+		return createPostbackButton(title, title);
+	}
+
 	public static Button createPostbackButton(String title, String payload) {
 		Button button = new Button("postback", title);
 		button.payload = payload;

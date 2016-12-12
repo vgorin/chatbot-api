@@ -2,6 +2,8 @@ package org.nstm.fbms.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -58,4 +60,67 @@ public class Message extends AbstractJson {
 	public Message(Attachment attachment) {
 		this.attachment = attachment;
 	}
+
+	public static Message text(String text) {
+		return new Message(text);
+	}
+
+	public static Message postback(String text, String buttonText) {
+		return postback(text, buttonText, buttonText);
+	}
+
+	public static Message postback(String text, String buttonText, String payload) {
+		return button(text, Button.createPostbackButton(buttonText, payload));
+	}
+
+	public static Message button(String text, Button button) {
+		Message message = new Message();
+		message.setButtons(text, button);
+		return message;
+	}
+
+	public void setButtons(String text, Button... buttons) {
+		setButtons(text, Arrays.asList(buttons));
+	}
+
+	public void setButtons(String text, List<Button> buttons) {
+		this.text = null;
+		attachment = new Attachment("template");
+		attachment.payload = new Payload("button");
+		attachment.payload.buttons = new LinkedList<>();
+		addButtons(text, buttons);
+	}
+
+	public void addButtons(String text, Button... buttons) {
+		addButtons(text, Arrays.asList(buttons));
+	}
+
+	public void addButtons(String text, List<Button> buttons) {
+		if(this.text != null) {
+			throw new IllegalStateException("this message already contains text");
+		}
+		if(attachment == null) {
+			attachment = new Attachment("template");
+		}
+		else if(!"template".equals(attachment.type)) {
+			throw new IllegalStateException(
+					String.format("wrong attachment type, expected template, actual %s", attachment.type)
+			);
+		}
+
+		if(attachment.payload == null) {
+			attachment.payload = new Payload("button");
+		}
+		else if(!"button".equals(attachment.payload.templateType)) {
+			throw new IllegalStateException(
+					String.format("wrong payload template type, expected button, actual %s", attachment.payload.templateType)
+			);
+		}
+		attachment.payload.text = text;
+		if(attachment.payload.buttons == null) {
+			attachment.payload.buttons = new LinkedList<>();
+		}
+		attachment.payload.buttons.addAll(buttons);
+	}
+
 }
