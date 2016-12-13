@@ -88,11 +88,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @author vgorin
- *         file created on 12/7/16 4:33 PM
- */
-
 
 @RestController
 public class FacebookController {
@@ -150,11 +145,6 @@ package org.nstm.fbms.example;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-
-/**
- * @author vgorin
- *         file created on 12/7/16 4:34 PM
- */
 
 
 @SpringBootApplication
