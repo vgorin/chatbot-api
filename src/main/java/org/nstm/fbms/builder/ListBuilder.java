@@ -1,9 +1,6 @@
 package org.nstm.fbms.builder;
 
-import org.nstm.fbms.json.Attachment;
-import org.nstm.fbms.json.Element;
-import org.nstm.fbms.json.Message;
-import org.nstm.fbms.json.Payload;
+import org.nstm.fbms.json.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -59,6 +56,17 @@ public class ListBuilder extends MessageBuilder {
 
 	public ListBuilder addElement(Element element) {
 		message.attachment.payload.elements.add(element);
+		return this;
+	}
+
+	public ListBuilder setButton(Button button) {
+		if(message.attachment.payload.buttons == null) {
+			message.attachment.payload.buttons = new LinkedList<>();
+		}
+		else {
+			message.attachment.payload.buttons.clear();
+		}
+		message.attachment.payload.buttons.add(button);
 		return this;
 	}
 

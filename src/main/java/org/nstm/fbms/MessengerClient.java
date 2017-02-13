@@ -4,6 +4,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -27,17 +28,41 @@ public class MessengerClient {
 	private static final Logger log = LoggerFactory.getLogger(MessengerClient.class);
 
 	private final String postURL;
+	private final String settingsURL;
+	private final String userProfileURLTemplate;
 
-	/**
-	 *
-	 * @param postURL https://graph.facebook.com/v2.6/me/messages?access_token=&lt;token&gt;
-	 */
-	public MessengerClient(String postURL) {
-		this.postURL = postURL;
+	public MessengerClient(String accessToken) {
+		this.postURL = String.format("https://graph.facebook.com/v2.6/me/messages?access_token=%s", accessToken);
+		this.settingsURL = String.format("https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s", accessToken);
+		this.userProfileURLTemplate = String.format("https://graph.facebook.com/v2.6/%%s?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=%s", accessToken);
 	}
 
 	public static MessengerClient defaultClient(String accessToken) {
-		return new MessengerClient(String.format("https://graph.facebook.com/v2.6/me/messages?access_token=%s", accessToken));
+		return new MessengerClient(accessToken);
+	}
+
+	public UserProfile retrieveUserProfile(String clientId) throws IOException {
+		String getURL = String.format(userProfileURLTemplate, clientId);
+		HttpGet get = new HttpGet(getURL);
+		log.info("HTTP GET {}", getURL);
+		HttpResponse httpResponse = HTTP_CLIENT.execute(get);
+		HttpEntity entity = httpResponse.getEntity();
+		String response = EntityUtils.toString(entity);
+		EntityUtils.consume(entity);
+		StatusLine line = httpResponse.getStatusLine();
+		if(line.getStatusCode() == 200) {
+			log.info("{}\n{}", line, response);
+			return JsonUtil.fromJson(response, UserProfile.class);
+		}
+		else {
+			log.warn("{}\n{}", line, response);
+			return null;
+		}
+	}
+
+	public Response setGreetingMessage(String text) throws IOException {
+		Settings greetingSettings = Settings.createGreeting(text);
+		return sendJson(settingsURL, greetingSettings.toJson());
 	}
 
 	public Response sendText(String recipientId, String text) throws IOException {
@@ -76,9 +101,9 @@ public class MessengerClient {
 
 	private Response send(Recipient recipient, Message message) throws IOException {
 		log.info("sending a message to {}, message = {}", recipient, message);
-		String jsonPayload = JsonUtil.toJson(new Messaging(recipient, message));
+		String jsonPayload = new Messaging(recipient, message).toJson();
 		log.info("json payload for {} is {}", recipient, jsonPayload);
-		Response response = sendJson(jsonPayload);
+		Response response = sendJson(postURL, jsonPayload);
 		if(response != null) {
 			log.info("message {} sent back to {} successfully!", message, recipient);
 		}
@@ -88,7 +113,7 @@ public class MessengerClient {
 		return response;
 	}
 
-	private Response sendJson(String jsonPayload) throws IOException {
+	private Response sendJson(String postURL, String jsonPayload) throws IOException {
 		HttpPost post = new HttpPost(postURL);
 		post.setEntity(new StringEntity(jsonPayload, ContentType.APPLICATION_JSON));
 

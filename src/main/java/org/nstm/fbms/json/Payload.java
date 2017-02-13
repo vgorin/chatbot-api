@@ -12,7 +12,8 @@ import java.util.List;
 
 public class Payload extends AbstractJson {
 	public String url;
-	@JsonProperty("template_type") public String templateType;
+	@JsonProperty("template_type")
+	public String templateType;
 	public String text;
 	public List<Button> buttons;
 	public List<Element> elements;

@@ -62,9 +62,12 @@ public class ListItemBuilder extends GenericBuilder<Element> {
 		return this;
 	}
 
-	public ListItemBuilder addButton(Button button) {
+	public ListItemBuilder setButton(Button button) {
 		if(element.buttons == null) {
 			element.buttons = new LinkedList<>();
+		}
+		else {
+			element.buttons.clear();
 		}
 		element.buttons.add(button);
 		return this;
