@@ -16,4 +16,11 @@ public class Attachment extends AbstractJson {
 	public Attachment(String type) {
 		this.type = type;
 	}
+
+	public static Attachment image(String url) {
+		Attachment a = new Attachment("image");
+		a.payload = new Payload();
+		a.payload.url = url;
+		return a;
+	}
 }

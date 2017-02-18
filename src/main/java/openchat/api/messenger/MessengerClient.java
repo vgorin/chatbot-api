@@ -68,7 +68,12 @@ public class MessengerClient {
 
 	public Response sendText(String recipientId, String text) throws IOException {
 		Message message = new Message(text);
-		return send(new Recipient(recipientId), message);
+		return send(recipientId, message);
+	}
+
+	public Response sendImage(String recipientId, String url) throws IOException {
+		Message message = new Message(Attachment.image(url));
+		return send(recipientId, message);
 	}
 
 	public Response sendReplies(String recipientId, String text, QuickReply... replies) throws IOException {
@@ -76,10 +81,9 @@ public class MessengerClient {
 	}
 
 	public Response sendReplies(String recipientId, String text, List<QuickReply> replies) throws IOException {
-		Recipient recipient = new Recipient(recipientId);
 		Message message = new Message(text);
 		message.quickReplies = replies;
-		return send(recipient, message);
+		return send(recipientId, message);
 	}
 
 	public Response sendButtons(String recipientId, String text, Button... buttons) throws IOException {
@@ -87,13 +91,12 @@ public class MessengerClient {
 	}
 
 	public Response sendButtons(String recipientId, String text, List<Button> buttons) throws IOException {
-		Recipient recipient = new Recipient(recipientId);
 		Message message = new Message();
 		message.attachment = new Attachment("template");
 		message.attachment.payload = new Payload("button");
 		message.attachment.payload.text = text;
 		message.attachment.payload.buttons = buttons;
-		return send(recipient, message);
+		return send(recipientId, message);
 	}
 
 	public Response send(String recipientId, Message message) throws IOException {
