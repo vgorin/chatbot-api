@@ -77,12 +77,12 @@
 ```
 package org.nstm.fbms.example;
 
-import org.nstm.fbms.MessengerClient;
-import org.nstm.fbms.builder.ButtonsBuilder;
-import org.nstm.fbms.builder.CarouselBuilder;
-import org.nstm.fbms.json.Callback;
-import org.nstm.fbms.json.Entry;
-import org.nstm.fbms.json.Messaging;
+import MessengerClient;
+import ButtonsBuilder;
+import CarouselBuilder;
+import Callback;
+import Entry;
+import Messaging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
