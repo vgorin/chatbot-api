@@ -1,7 +1,7 @@
 package openchat.api.messenger.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
@@ -14,15 +14,19 @@ import java.util.List;
  */
 
 
+@XmlRootElement
 public class Element extends AbstractJson {
+	@XmlElement
 	public String title;
-	@JsonProperty("item_url")
+	@XmlElement(name = "item_url")
 	public String itemUrl;
-	@JsonProperty("default_action")
+	@XmlElement(name = "default_action")
 	public Object defaultAction;
-	@JsonProperty("image_url")
+	@XmlElement(name = "image_url")
 	public String imageUrl;
+	@XmlElement
 	public String subtitle;
+	@XmlElement
 	public List<Button> buttons;
 
 	public Element(String title) {

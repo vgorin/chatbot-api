@@ -1,6 +1,7 @@
 package openchat.api.messenger.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * <p>
@@ -27,18 +28,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 
+@XmlRootElement
 public class Messaging extends AbstractJson {
+	@XmlElement
 	public Sender sender;
+	@XmlElement
 	public Recipient recipient;
+	@XmlElement
 	public String timestamp;
+	@XmlElement
 	public Postback postback;
+	@XmlElement
 	public Message message;
+	@XmlElement
 	public Delivery delivery;
+	@XmlElement
 	public Read read;
 	/**
 	 * One of: mark_seen, typing_on, typing_off
 	 */
-	@JsonProperty("sender_action")
+	@XmlElement(name = "sender_action")
 	public String senderAction;
 
 	public Messaging() {

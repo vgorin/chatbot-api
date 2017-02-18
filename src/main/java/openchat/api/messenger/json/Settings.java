@@ -1,6 +1,7 @@
 package openchat.api.messenger.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author vgorin
@@ -8,9 +9,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 
+@XmlRootElement
 public class Settings extends AbstractJson {
-	@JsonProperty("setting_type")
+	@XmlElement(name = "setting_type")
 	public String settingType;
+	@XmlElement
 	public Greeting greeting;
 
 	public Settings(String settingType) {

@@ -20,8 +20,11 @@ public class JsonUtil {
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 	static {
+		// exclude null and empty values from output XML/JSON
 		OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+		// allow reading of JSON values without quotes
 		OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+		// support both Jackson and JAXB annotations
 		OBJECT_MAPPER.setAnnotationIntrospector(new AnnotationIntrospectorPair(new JacksonAnnotationIntrospector(), new JaxbAnnotationIntrospector()));
 	}
 

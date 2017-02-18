@@ -1,8 +1,9 @@
 package openchat.api.messenger.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import openchat.api.messenger.builder.QuickRepliesBuilder;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +23,15 @@ import java.util.List;
  */
 
 
+@XmlRootElement
 public class QuickReply extends AbstractJson {
-	@JsonProperty("content_type")
+	@XmlElement(name = "content_type")
 	public String contentType;
+	@XmlElement
 	public String title;
+	@XmlElement
 	public String payload;
-	@JsonProperty("image_url")
+	@XmlElement(name = "image_url")
 	public String imageUrl;
 
 	public QuickReply() {

@@ -1,6 +1,7 @@
 package openchat.api.messenger.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author vgorin
@@ -8,10 +9,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 
+@XmlRootElement
 public class DefaultAction extends Button {
-	@JsonProperty("messenger_extensions")
+	@XmlElement(name = "messenger_extensions")
 	public String messengerExtensions;
-	@JsonProperty("fallback_url")
+	@XmlElement(name = "fallback_url")
 	public String fallbackUrl;
 
 	public DefaultAction(String url) {

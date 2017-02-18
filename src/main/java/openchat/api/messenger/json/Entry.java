@@ -1,5 +1,7 @@
 package openchat.api.messenger.json;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
@@ -10,8 +12,12 @@ import java.util.List;
  */
 
 
+@XmlRootElement
 public class Entry extends AbstractJson {
+	@XmlElement
 	public String id;
+	@XmlElement
 	public long time;
+	@XmlElement
 	public List<Messaging> messaging;
 }

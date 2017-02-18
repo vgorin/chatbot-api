@@ -1,6 +1,7 @@
 package openchat.api.messenger.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author vgorin
@@ -8,7 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 
+@XmlRootElement
 public class Response extends AbstractJson {
-	@JsonProperty("recipient_id") public String recipientId;
-	@JsonProperty("message_id") public String messageId;
+	@XmlElement(name = "recipient_id")
+	public String recipientId;
+	@XmlElement(name = "message_id")
+	public String messageId;
 }

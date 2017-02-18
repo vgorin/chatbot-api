@@ -2,6 +2,8 @@ package openchat.api.messenger.json;
 
 import openchat.util.JsonUtil;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
@@ -14,8 +16,11 @@ import java.util.List;
  */
 
 
+@XmlRootElement
 public class Callback extends AbstractJson {
+	@XmlElement
 	public String object;
+	@XmlElement
 	public List<Entry> entry;
 
 	public static Callback parse(String json) throws Exception {

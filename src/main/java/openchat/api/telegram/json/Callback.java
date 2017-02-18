@@ -1,7 +1,5 @@
 package openchat.api.telegram.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;

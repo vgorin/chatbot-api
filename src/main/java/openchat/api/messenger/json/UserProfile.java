@@ -1,6 +1,7 @@
 package openchat.api.messenger.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author vgorin
@@ -8,14 +9,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 
+@XmlRootElement
 public class UserProfile extends AbstractJson {
-	@JsonProperty("first_name")
+	@XmlElement(name = "first_name")
 	public String firstName;
-	@JsonProperty("last_name")
+	@XmlElement(name = "last_name")
 	public String lastName;
-	@JsonProperty("profile_pic")
+	@XmlElement(name = "profile_pic")
 	public String profilePic;
+	@XmlElement
 	public String locale;
+	@XmlElement
 	public int timezone;
+	@XmlElement
 	public String gender;
 }

@@ -1,7 +1,9 @@
 package openchat.api.messenger.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import openchat.api.messenger.builder.ButtonsBuilder;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * <p>
@@ -34,12 +36,18 @@ import openchat.api.messenger.builder.ButtonsBuilder;
  */
 
 
+@XmlRootElement
 public class Button extends AbstractJson {
+	@XmlElement
 	public String type;
+	@XmlElement
 	public String url;
+	@XmlElement
 	public String title;
+	@XmlElement
 	public String payload;
-	@JsonProperty("webview_height_ratio") public String webviewHeightRatio;
+	@XmlElement(name = "webview_height_ratio")
+	public String webviewHeightRatio;
 
 	public Button(String type) {
 		this.type = type;

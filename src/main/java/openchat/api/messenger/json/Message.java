@@ -1,7 +1,7 @@
 package openchat.api.messenger.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,20 +34,27 @@ import java.util.List;
  */
 
 
+@XmlRootElement
 public class Message extends AbstractJson {
+	@XmlElement
 	public String mid;
+	@XmlElement
 	public String seq;
+	@XmlElement
 	public String text;
-	@JsonProperty("quick_reply")
+	@XmlElement(name = "quick_reply")
 	public QuickReply quickReply;
-	@JsonProperty("quick_replies")
+	@XmlElement(name = "quick_replies")
 	public List<QuickReply> quickReplies;
-	@JsonProperty("is_echo")
+	@XmlElement(name = "is_echo")
 	public String isEcho;
-	@JsonProperty("app_id")
+	@XmlElement(name = "app_id")
 	public String appId;
+	@XmlElement
 	public String metadata;
+	@XmlElement
 	public List<Attachment> attachments;
+	@XmlElement
 	public Attachment attachment;
 
 	public Message() {
