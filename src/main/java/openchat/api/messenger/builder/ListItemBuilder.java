@@ -3,6 +3,7 @@ package openchat.api.messenger.builder;
 import openchat.api.messenger.json.Button;
 import openchat.api.messenger.json.DefaultAction;
 import openchat.api.messenger.json.Element;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedList;
 
@@ -17,16 +18,19 @@ import java.util.LinkedList;
 
 
 public class ListItemBuilder extends GenericBuilder<Element> {
+	public static final int TITLE_LENGTH = 80;
+	public static final int SUBTITLE_LENGTH = 80;
+
 	private ListBuilder listBuilder;
 	private Element element;
 
 	public ListItemBuilder(ListBuilder listBuilder, String pageTitle) {
 		this.listBuilder = listBuilder;
-		element = new Element(pageTitle);
+		element = new Element(trimTitle(pageTitle));
 	}
 
 	public ListItemBuilder(String pageTitle) {
-		element = new Element(pageTitle);
+		element = new Element(trimTitle(pageTitle));
 	}
 
 	public static ListItemBuilder attached(ListBuilder template, String pageTitle) {
@@ -38,7 +42,7 @@ public class ListItemBuilder extends GenericBuilder<Element> {
 	}
 
 	public ListItemBuilder setTitle(String title) {
-		element.title = title;
+		element.title = trimTitle(title);
 		return this;
 	}
 
@@ -58,7 +62,7 @@ public class ListItemBuilder extends GenericBuilder<Element> {
 	}
 
 	public ListItemBuilder setSubtitle(String subtitle) {
-		element.subtitle = subtitle;
+		element.subtitle = trimSubtitle(subtitle);
 		return this;
 	}
 
@@ -85,5 +89,13 @@ public class ListItemBuilder extends GenericBuilder<Element> {
 
 	public ListItemBuilder createNext(String title) {
 		return close().createElement(title);
+	}
+
+	private static String trimTitle(String title) {
+		return  StringUtils.substring(title, 0, TITLE_LENGTH);
+	}
+
+	private static String trimSubtitle(String subtitle) {
+		return  StringUtils.substring(subtitle, 0, SUBTITLE_LENGTH);
 	}
 }
