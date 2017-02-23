@@ -15,4 +15,6 @@ public class Response extends AbstractJson {
 	public String recipientId;
 	@XmlElement(name = "message_id")
 	public String messageId;
+	@XmlElement
+	public String result;
 }
