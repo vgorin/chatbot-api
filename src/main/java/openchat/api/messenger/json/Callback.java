@@ -23,7 +23,7 @@ public class Callback extends AbstractJson {
 	@XmlElement
 	public List<Entry> entry;
 
-	public static Callback parse(String json) throws Exception {
+	public static Callback parse(String json) {
 		return JsonUtil.parseJson(json, Callback.class);
 	}
 }

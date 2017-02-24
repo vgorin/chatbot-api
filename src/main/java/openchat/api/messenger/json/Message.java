@@ -56,6 +56,8 @@ public class Message extends AbstractJson {
 	public List<Attachment> attachments;
 	@XmlElement
 	public Attachment attachment;
+	@XmlElement(name = "sticker_id")
+	public String stickerId;
 
 	public Message() {
 	}

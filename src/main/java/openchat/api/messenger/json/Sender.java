@@ -12,5 +12,5 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Sender extends AbstractJson {
 	@XmlElement
-	public String id;
+	public long id;
 }

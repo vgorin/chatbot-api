@@ -26,6 +26,8 @@ public class Payload extends AbstractJson {
 	public String topElementStyle;
 	@XmlElement
 	public Coordinates coordinates;
+	@XmlElement(name = "sticker_id")
+	public String stickerId;
 
 	public Payload() {
 	}

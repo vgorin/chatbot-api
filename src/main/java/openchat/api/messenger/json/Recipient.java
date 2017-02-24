@@ -12,17 +12,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Recipient extends AbstractJson {
 	@XmlElement
-	public String id;
+	public long id;
 
 	public Recipient() {
 	}
 
-	public Recipient(String id) {
+	public Recipient(long id) {
 		this.id = id;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("recipient #%s", id);
+		return String.format("recipient #%d", id);
 	}
 }

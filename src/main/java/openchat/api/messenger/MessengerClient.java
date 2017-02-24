@@ -35,14 +35,14 @@ public class MessengerClient {
 	public MessengerClient(String accessToken) {
 		this.postURL = String.format("https://graph.facebook.com/v2.6/me/messages?access_token=%s", accessToken);
 		this.settingsURL = String.format("https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s", accessToken);
-		this.userProfileURLTemplate = String.format("https://graph.facebook.com/v2.6/%%s?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=%s", accessToken);
+		this.userProfileURLTemplate = String.format("https://graph.facebook.com/v2.6/%%d?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=%s", accessToken);
 	}
 
 	public static MessengerClient defaultClient(String accessToken) {
 		return new MessengerClient(accessToken);
 	}
 
-	public UserProfile retrieveUserProfile(String clientId) throws IOException {
+	public UserProfile retrieveUserProfile(long clientId) throws IOException {
 		String getURL = String.format(userProfileURLTemplate, clientId);
 		HttpGet get = new HttpGet(getURL);
 		log.info("HTTP GET {}", getURL);
@@ -66,31 +66,31 @@ public class MessengerClient {
 		return sendJson(settingsURL, greetingSettings.toJson());
 	}
 
-	public Response sendText(String recipientId, String text) throws IOException {
+	public Response sendText(long recipientId, String text) throws IOException {
 		Message message = new Message(text);
 		return send(recipientId, message);
 	}
 
-	public Response sendImage(String recipientId, String url) throws IOException {
+	public Response sendImage(long recipientId, String url) throws IOException {
 		Message message = new Message(Attachment.image(url));
 		return send(recipientId, message);
 	}
 
-	public Response sendReplies(String recipientId, String text, QuickReply... replies) throws IOException {
+	public Response sendReplies(long recipientId, String text, QuickReply... replies) throws IOException {
 		return sendReplies(recipientId, text, Arrays.asList(replies));
 	}
 
-	public Response sendReplies(String recipientId, String text, List<QuickReply> replies) throws IOException {
+	public Response sendReplies(long recipientId, String text, List<QuickReply> replies) throws IOException {
 		Message message = new Message(text);
 		message.quickReplies = replies;
 		return send(recipientId, message);
 	}
 
-	public Response sendButtons(String recipientId, String text, Button... buttons) throws IOException {
+	public Response sendButtons(long recipientId, String text, Button... buttons) throws IOException {
 		return sendButtons(recipientId, text, Arrays.asList(buttons));
 	}
 
-	public Response sendButtons(String recipientId, String text, List<Button> buttons) throws IOException {
+	public Response sendButtons(long recipientId, String text, List<Button> buttons) throws IOException {
 		Message message = new Message();
 		message.attachment = new Attachment("template");
 		message.attachment.payload = new Payload("button");
@@ -99,7 +99,7 @@ public class MessengerClient {
 		return send(recipientId, message);
 	}
 
-	public Response send(String recipientId, Message message) throws IOException {
+	public Response send(long recipientId, Message message) throws IOException {
 		return send(new Recipient(recipientId), message);
 	}
 
