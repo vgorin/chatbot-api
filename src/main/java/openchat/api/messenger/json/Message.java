@@ -82,9 +82,31 @@ public class Message extends AbstractJson {
 		return button(text, Button.createPostbackButton(buttonText, payload));
 	}
 
+	public static Message url(String text, String buttonText, String buttonUrl) {
+		return button(text, Button.createUrlButton(buttonText, buttonUrl));
+	}
+
 	public static Message button(String text, Button button) {
 		Message message = new Message();
 		message.setButtons(text, button);
+		return message;
+	}
+
+	public static Message reply(String text, QuickReply reply) {
+		List<QuickReply> replies;
+		if(reply != null) {
+			replies = new LinkedList<>();
+			replies.add(reply);
+		}
+		else {
+			replies = null;
+		}
+		return replies(text, replies);
+	}
+
+	public static Message replies(String text, List<QuickReply> replies) {
+		Message message = new Message(text);
+		message.quickReplies = replies;
 		return message;
 	}
 

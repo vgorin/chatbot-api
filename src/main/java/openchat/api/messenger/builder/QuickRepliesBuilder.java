@@ -51,6 +51,11 @@ public class QuickRepliesBuilder extends GenericBuilder<List<QuickReply>> {
 		return this;
 	}
 
+	public QuickRepliesBuilder addQuickReply(QuickReply reply) {
+		replies.add(reply);
+		return this;
+	}
+
 	@Override
 	List<QuickReply> buildGeneric() {
 		return replies;
