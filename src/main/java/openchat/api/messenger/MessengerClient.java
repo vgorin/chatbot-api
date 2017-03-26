@@ -62,8 +62,17 @@ public class MessengerClient {
 	}
 
 	public Response setGreetingMessage(String text) throws IOException {
-		Settings greetingSettings = Settings.createGreeting(text);
-		return sendJson(settingsURL, greetingSettings.toJson());
+		Settings settings = Settings.createGreeting(text);
+		return sendJson(settingsURL, settings.toJson());
+	}
+
+	public Response setGetStartedButton() throws IOException {
+		return setGetStartedButton("/start");
+	}
+
+	public Response setGetStartedButton(String payload) throws IOException {
+		Settings settings = Settings.createGetStartedButton(payload);
+		return sendJson(settingsURL, settings.toJson());
 	}
 
 	public Response sendText(long recipientId, String text) throws IOException {

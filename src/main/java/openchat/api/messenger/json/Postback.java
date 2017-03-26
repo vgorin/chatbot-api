@@ -15,4 +15,11 @@ public class Postback extends AbstractJson {
 	public String payload;
 	@XmlElement
 	public Referral referral;
+
+	public Postback() {
+	}
+
+	public Postback(String payload) {
+		this.payload = payload;
+	}
 }

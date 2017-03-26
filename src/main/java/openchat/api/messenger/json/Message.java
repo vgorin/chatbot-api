@@ -104,6 +104,10 @@ public class Message extends AbstractJson {
 		return replies(text, replies);
 	}
 
+	public static Message replies(String text, QuickReply... replies) {
+		return replies(text, Arrays.asList(replies));
+	}
+
 	public static Message replies(String text, List<QuickReply> replies) {
 		Message message = new Message(text);
 		message.quickReplies = replies;
