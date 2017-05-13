@@ -1,4 +1,4 @@
-# OpenChat Platform by CML Team #
+# OpenChat Platform by CML Team, http://cmlteam.com/ #
 
 ## Basic Usage Example (Spring-boot based RestController). ##
 
