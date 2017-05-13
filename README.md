@@ -1,4 +1,4 @@
-# FB Messenger Platform API by NoShit Team (tm) #
+# OpenChat Platform by CML Team #
 
 ## Basic Usage Example (Spring-boot based RestController). ##
 
