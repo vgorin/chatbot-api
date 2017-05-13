@@ -33,13 +33,25 @@ public class MessengerClient {
 	private final String userProfileURLTemplate;
 
 	public MessengerClient(String accessToken) {
-		this.postURL = String.format("https://graph.facebook.com/v2.6/me/messages?access_token=%s", accessToken);
-		this.settingsURL = String.format("https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s", accessToken);
-		this.userProfileURLTemplate = String.format("https://graph.facebook.com/v2.6/%%d?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=%s", accessToken);
+		this(2.6, accessToken);
 	}
 
-	public static MessengerClient defaultClient(String accessToken) {
-		return new MessengerClient(accessToken);
+	public MessengerClient(double version, String accessToken) {
+		this("https://graph.facebook.com", version, accessToken);
+	}
+
+	public MessengerClient(String baseURL, double version, String accessToken) {
+		this(
+				String.format("%s/v%s/me/messages?access_token=%s", baseURL, version, accessToken),
+				String.format("%s/v%s/me/thread_settings?access_token=%s", baseURL, version, accessToken),
+				String.format("%s/v%s/%%d?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=%s", baseURL, version, accessToken)
+		);
+	}
+
+	public MessengerClient(String postURL, String settingsURL, String userProfileURLTemplate) {
+		this.postURL = postURL;
+		this.settingsURL = settingsURL;
+		this.userProfileURLTemplate = userProfileURLTemplate;
 	}
 
 	public UserProfile retrieveUserProfile(long clientId) throws IOException {
