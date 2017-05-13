@@ -28,6 +28,8 @@ public class Payload extends AbstractJson {
 	public Coordinates coordinates;
 	@XmlElement(name = "sticker_id")
 	public String stickerId;
+	@XmlElement
+	public Boolean sharable;
 
 	public Payload() {
 	}

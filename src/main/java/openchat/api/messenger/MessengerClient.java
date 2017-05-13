@@ -6,6 +6,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
@@ -30,6 +31,7 @@ public class MessengerClient {
 
 	private final String postURL;
 	private final String settingsURL;
+	private final String profileURL;
 	private final String userProfileURLTemplate;
 
 	public MessengerClient(String accessToken) {
@@ -44,33 +46,41 @@ public class MessengerClient {
 		this(
 				String.format("%s/v%s/me/messages?access_token=%s", baseURL, version, accessToken),
 				String.format("%s/v%s/me/thread_settings?access_token=%s", baseURL, version, accessToken),
+				String.format("%s/v%s/me/messenger_profile?access_token=%s", baseURL, version, accessToken),
 				String.format("%s/v%s/%%d?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=%s", baseURL, version, accessToken)
 		);
 	}
 
-	public MessengerClient(String postURL, String settingsURL, String userProfileURLTemplate) {
+	public MessengerClient(String postURL, String settingsURL, String profileURL, String userProfileURLTemplate) {
 		this.postURL = postURL;
 		this.settingsURL = settingsURL;
+		this.profileURL = profileURL;
 		this.userProfileURLTemplate = userProfileURLTemplate;
+	}
+
+	public Response setMenu(PersistedMenu menu) throws IOException {
+		return sendJson(profileURL, menu.toJson());
+	}
+
+	public PersistedMenu getMenu() throws IOException {
+		String getURL = String.format("%s&fields=persistent_menu", profileURL);
+		String json = getJson(getURL);
+		return json == null? null: JsonUtil.parseJson(json, PersistedMenu.class);
+	}
+
+	public int deleteMenu() throws IOException {
+		HttpDelete delete = new HttpDelete(profileURL);
+		String jsonPayload = "{\n\t\"fields\":[\n\t\t\"persistent_menu\"\n\t]\n}";
+		log.info("HTTP DELETE {}\n{}", profileURL, jsonPayload);
+		HttpResponse httpResponse = HTTP_CLIENT.execute(delete);
+		StatusLine line = httpResponse.getStatusLine();
+		return line.getStatusCode();
 	}
 
 	public UserProfile retrieveUserProfile(long clientId) throws IOException {
 		String getURL = String.format(userProfileURLTemplate, clientId);
-		HttpGet get = new HttpGet(getURL);
-		log.info("HTTP GET {}", getURL);
-		HttpResponse httpResponse = HTTP_CLIENT.execute(get);
-		HttpEntity entity = httpResponse.getEntity();
-		String response = EntityUtils.toString(entity);
-		EntityUtils.consume(entity);
-		StatusLine line = httpResponse.getStatusLine();
-		if(line.getStatusCode() == 200) {
-			log.info("{}\n{}", line, response);
-			return JsonUtil.parseJson(response, UserProfile.class);
-		}
-		else {
-			log.warn("{}\n{}", line, response);
-			return null;
-		}
+		String json = getJson(getURL);
+		return json == null? null: JsonUtil.parseJson(json, UserProfile.class);
 	}
 
 	public Response setGreetingMessage(String text) throws IOException {
@@ -145,16 +155,42 @@ public class MessengerClient {
 		log.info("HTTP POST {}\n{}", postURL, jsonPayload);
 		HttpResponse httpResponse = HTTP_CLIENT.execute(post);
 		HttpEntity entity = httpResponse.getEntity();
-		String response = EntityUtils.toString(entity);
-		EntityUtils.consume(entity);
-		StatusLine line = httpResponse.getStatusLine();
-		if(line.getStatusCode() == 200) {
-			log.info("{}\n{}", line, response);
-			return JsonUtil.parseJson(response, Response.class);
+		try {
+			String response = EntityUtils.toString(entity);
+			StatusLine line = httpResponse.getStatusLine();
+			if(line.getStatusCode() == 200) {
+				log.info("{}\n{}", line, response);
+				return JsonUtil.parseJson(response, Response.class);
+			}
+			else {
+				log.warn("{}\n{}", line, response);
+				return null;
+			}
 		}
-		else {
-			log.warn("{}\n{}", line, response);
-			return null;
+		finally {
+			EntityUtils.consume(entity);
+		}
+	}
+
+	private String getJson(String getURL) throws IOException {
+		HttpGet get = new HttpGet(getURL);
+		log.info("HTTP GET {}", getURL);
+		HttpResponse httpResponse = HTTP_CLIENT.execute(get);
+		HttpEntity entity = httpResponse.getEntity();
+		try {
+			String response = EntityUtils.toString(entity);
+			StatusLine line = httpResponse.getStatusLine();
+			if(line.getStatusCode() == 200) {
+				log.info("{}\n{}", line, response);
+				return response;
+			}
+			else {
+				log.warn("{}\n{}", line, response);
+				return null;
+			}
+		}
+		finally {
+			EntityUtils.consume(entity);
 		}
 	}
 
