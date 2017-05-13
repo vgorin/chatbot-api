@@ -30,6 +30,8 @@ public class Payload extends AbstractJson {
 	public String stickerId;
 	@XmlElement
 	public Boolean sharable;
+	@XmlElement(name = "image_aspect_ratio")
+	public String imageAspectRatio;
 
 	public Payload() {
 	}

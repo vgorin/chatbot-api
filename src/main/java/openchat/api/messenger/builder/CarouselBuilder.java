@@ -39,6 +39,18 @@ public class CarouselBuilder extends MessageBuilder {
 		return new CarouselBuilder(capacity);
 	}
 
+	public static CarouselBuilder squareBuilder() {
+		CarouselBuilder builder = builder();
+		builder.message.attachment.payload.imageAspectRatio = "square";
+		return builder;
+	}
+
+	public static CarouselBuilder squareBuilder(int capacity) {
+		CarouselBuilder builder = builder(capacity);
+		builder.message.attachment.payload.imageAspectRatio = "square";
+		return builder;
+	}
+
 	public CarouselItemBuilder createElement(String title) {
 		return new CarouselItemBuilder(this, title);
 	}
