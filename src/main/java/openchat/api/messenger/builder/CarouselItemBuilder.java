@@ -1,6 +1,7 @@
 package openchat.api.messenger.builder;
 
 import openchat.api.messenger.json.Button;
+import openchat.api.messenger.json.DefaultAction;
 import openchat.api.messenger.json.Element;
 
 import java.util.LinkedList;
@@ -46,8 +47,13 @@ public class CarouselItemBuilder extends GenericBuilder<Element> {
 		return this;
 	}
 
-	public CarouselItemBuilder setDefaultAction(String defaultAction) {
-		element.defaultAction = defaultAction;
+	public CarouselItemBuilder setDefaultAction(String url) {
+		element.defaultAction = new DefaultAction(url);
+		return this;
+	}
+
+	public CarouselItemBuilder setDefaultActionPayload(String payload) {
+		element.defaultAction = payload;
 		return this;
 	}
 
