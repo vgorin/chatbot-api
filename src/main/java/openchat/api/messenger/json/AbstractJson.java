@@ -12,7 +12,7 @@ import openchat.util.JsonUtil;
  */
 
 
-abstract class AbstractJson {
+public abstract class AbstractJson {
 	@Override
 	public String toString() {
 		return toPrettyJson();
