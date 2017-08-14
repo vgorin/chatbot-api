@@ -14,6 +14,8 @@ public class Postback extends AbstractJson {
 	@XmlElement
 	public String payload;
 	@XmlElement
+	public String title;
+	@XmlElement
 	public Referral referral;
 
 	public Postback() {
