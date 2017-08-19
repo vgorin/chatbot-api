@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Postback extends AbstractJson {
 	@XmlElement
+	public String title;
+	@XmlElement
 	public String payload;
 	@XmlElement
 	public Referral referral;
@@ -20,6 +22,11 @@ public class Postback extends AbstractJson {
 	}
 
 	public Postback(String payload) {
+		this(payload, payload);
+	}
+
+	public Postback(String payload, String title) {
 		this.payload = payload;
+		this.title = title;
 	}
 }
