@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class UserProfile extends AbstractJson {
+	@XmlElement
+	public long id;
 	@XmlElement(name = "first_name")
 	public String firstName;
 	@XmlElement(name = "last_name")
