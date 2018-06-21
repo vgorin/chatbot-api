@@ -35,7 +35,7 @@ public class MessengerClient {
 	private final String userProfileURLTemplate;
 
 	public MessengerClient(String accessToken) {
-		this(2.6, accessToken);
+		this(2.7, accessToken);
 	}
 
 	public MessengerClient(double version, String accessToken) {
