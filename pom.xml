@@ -6,7 +6,7 @@
 
 	<groupId>openchat</groupId>
 	<artifactId>chatbot-api</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.1-2.12</version>
 	<name>Chatbot API, Openchat Platform</name>
 
 	<properties>
