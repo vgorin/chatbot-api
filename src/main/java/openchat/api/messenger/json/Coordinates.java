@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Coordinates extends AbstractJson {
 	@XmlElement(name = "lat")
-	public String latitude;
+	public double latitude;
 	@XmlElement(name = "long")
-	public String longitude;
+	public double longitude;
 }

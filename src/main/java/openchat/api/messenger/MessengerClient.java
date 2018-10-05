@@ -35,7 +35,7 @@ public class MessengerClient {
 	private final String userProfileURLTemplate;
 
 	public MessengerClient(String accessToken) {
-		this(2.7, accessToken);
+		this(2.12, accessToken);
 	}
 
 	public MessengerClient(double version, String accessToken) {
@@ -95,6 +95,10 @@ public class MessengerClient {
 	public Response setGetStartedButton(String payload) throws IOException {
 		Settings settings = Settings.createGetStartedButton(payload);
 		return sendJson(settingsURL, settings.toJson());
+	}
+
+	public Response askLocation(long recipientId, String text) throws IOException {
+		return sendReplies(recipientId, text, QuickReply.location());
 	}
 
 	public Response sendText(long recipientId, String text) throws IOException {
