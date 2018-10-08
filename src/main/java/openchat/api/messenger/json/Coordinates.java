@@ -15,4 +15,9 @@ public class Coordinates extends AbstractJson {
 	public double latitude;
 	@XmlElement(name = "long")
 	public double longitude;
+
+	@Override
+	public String toString() {
+		return String.format("%f,%f", latitude, longitude);
+	}
 }
