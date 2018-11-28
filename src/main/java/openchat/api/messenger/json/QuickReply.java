@@ -76,10 +76,6 @@ public class QuickReply extends AbstractJson {
 		return new QuickReply("location");
 	}
 
-	public static QuickReply location(String payload) {
-		return new QuickReply("location", null, payload);
-	}
-
 	public static List<QuickReply> of(String... titles) {
 		List<QuickReply> replies = new ArrayList<>(titles.length);
 		for(String title: titles) {
