@@ -101,10 +101,6 @@ public class MessengerClient {
 		return sendReplies(recipientId, text, QuickReply.location());
 	}
 
-	public Response askLocation(long recipientId, String text, String payload) throws IOException {
-		return sendReplies(recipientId, text, QuickReply.location(payload));
-	}
-
 	public Response sendText(long recipientId, String text) throws IOException {
 		Message message = new Message(text);
 		return send(recipientId, message);
