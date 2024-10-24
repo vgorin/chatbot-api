@@ -2,17 +2,15 @@ package openchat.api.messenger;
 
 import openchat.api.messenger.json.*;
 import openchat.util.JsonUtil;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.classic.methods.HttpDelete;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.HttpResponse;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,9 +70,7 @@ public class MessengerClient {
 		HttpDelete delete = new HttpDelete(profileURL);
 		String jsonPayload = "{\n\t\"fields\":[\n\t\t\"persistent_menu\"\n\t]\n}";
 		log.info("HTTP DELETE {}\n{}", profileURL, jsonPayload);
-		HttpResponse httpResponse = HTTP_CLIENT.execute(delete);
-		StatusLine line = httpResponse.getStatusLine();
-		return line.getStatusCode();
+		return HTTP_CLIENT.execute(delete, HttpResponse::getCode);
 	}
 
 	public UserProfile retrieveUserProfile(long clientId) throws IOException {
@@ -157,45 +153,31 @@ public class MessengerClient {
 		post.setEntity(new StringEntity(jsonPayload, ContentType.APPLICATION_JSON));
 
 		log.info("HTTP POST {}\n{}", postURL, jsonPayload);
-		HttpResponse httpResponse = HTTP_CLIENT.execute(post);
-		HttpEntity entity = httpResponse.getEntity();
-		try {
-			String response = EntityUtils.toString(entity);
-			StatusLine line = httpResponse.getStatusLine();
-			if(line.getStatusCode() == 200) {
-				log.info("{}\n{}", line, response);
-				return JsonUtil.parseJson(response, Response.class);
-			}
-			else {
-				log.warn("{}\n{}", line, response);
+		return HTTP_CLIENT.execute(post, response -> {
+			int responseCode = response.getCode();
+			String responseBody = EntityUtils.toString(response.getEntity());
+			if(responseCode != 200) {
+				log.warn("{}\n{}", responseCode, responseBody);
 				return null;
 			}
-		}
-		finally {
-			EntityUtils.consume(entity);
-		}
+			log.info("{}\n{}", responseCode, responseBody);
+			return JsonUtil.parseJson(responseBody, Response.class);
+		});
 	}
 
 	private String getJson(String getURL) throws IOException {
 		HttpGet get = new HttpGet(getURL);
 		log.info("HTTP GET {}", getURL);
-		HttpResponse httpResponse = HTTP_CLIENT.execute(get);
-		HttpEntity entity = httpResponse.getEntity();
-		try {
-			String response = EntityUtils.toString(entity);
-			StatusLine line = httpResponse.getStatusLine();
-			if(line.getStatusCode() == 200) {
-				log.info("{}\n{}", line, response);
-				return response;
-			}
-			else {
-				log.warn("{}\n{}", line, response);
+		return HTTP_CLIENT.execute(get, response -> {
+			int responseCode = response.getCode();
+			String responseBody = EntityUtils.toString(response.getEntity());
+			if(responseCode != 200) {
+				log.warn("{}\n{}", responseCode, responseBody);
 				return null;
 			}
-		}
-		finally {
-			EntityUtils.consume(entity);
-		}
+			log.info("{}\n{}", responseCode, responseBody);
+			return responseBody;
+		});
 	}
 
 }

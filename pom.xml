@@ -6,11 +6,11 @@
 
 	<groupId>openchat</groupId>
 	<artifactId>chatbot-api</artifactId>
-	<version>0.1-2.12</version>
+	<version>0.1.1</version>
 	<name>Chatbot API, Openchat Platform</name>
 
 	<properties>
-		<jackson.version>2.8.5</jackson.version>
+		<jackson.version>2.17.1</jackson.version>
 	</properties>
 
 	<dependencies>
@@ -36,26 +36,43 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
+		<!-- JAXB and its dependencies (built into Java 8 but removed from Java 11 -->
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>2.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>2.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.activation</groupId>
+			<artifactId>jakarta.activation</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
 		<!-- Commons Lang -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.12.0</version>
+			<version>3.17.0</version>
 		</dependency>
 
 
 		<!-- Apache HTTP Client -->
 		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.2</version>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
+			<version>5.4</version>
 		</dependency>
 
 		<!-- SLF4J -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.21</version>
+			<version>1.7.36</version>
 		</dependency>
 
 	</dependencies>
@@ -65,10 +82,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.11.0</version>
+				<version>3.12.1</version>
 				<configuration>
 					<source>1.8</source>
-					<target>1.8</target>
+					<target>11</target>
 				</configuration>
 			</plugin>
 		</plugins>
